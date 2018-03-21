@@ -1,0 +1,54 @@
+﻿<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>Recipe Tracker</title>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
+    <script src="app.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+</head>
+
+<body ng-app="app" style="padding: 20px;">
+
+	<h1>Recipe Tracker</h1>
+
+    <div id="recipe" ng-controller="MyCtrl as ctrl">
+
+        <table class="table" id="grid">
+
+            <thead>
+                <tr>
+                    <th>Ingedient</th>
+                    <th>Amount</th>
+                    <th>Measure</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                <tr ng-repeat="item in ingedients">
+                    <td>{{ item.ingridient }}</td>
+                    <td>{{ item.number }}</td>
+                    <td>{{ item.measure }}</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+
+</body>
+</html>
