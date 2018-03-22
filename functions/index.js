@@ -33,23 +33,50 @@ function processV1Request (request, response) {
   // Create handlers for Dialogflow actions as well as a 'default' handler
   const actionHandlers = {
 
-      'input.welcome': () => {
-          if (requestSource === googleAssistantRequest) {
-              sendGoogleResponse('Welcome, Chef, let\'s start cooking!'); // Send simple response to user
-          } else {
-              sendResponse('Welcome, Chef, let\'s start cooking!'); // Send simple response to user
-          }
+      'input.add.recipe': () => {
+
+        //todo write to database
+
+        if (requestSource === googleAssistantRequest) {
+            sendGoogleResponse('You created a new recipe. Plese say first inredient');
+        } else {
+            sendResponse('You created a new recipe. Plese say first inredient');
+        }
       },
+
+      'input.open.recipe': () => {
+
+        //todo write to database
+
+        if (requestSource === googleAssistantRequest) {
+            sendGoogleResponse('You opened a new recipe. Plese continue cooking');
+        } else {
+            sendResponse('You opened a new recipe. Plese continue cooking');
+        }
+      },
+
       'input.add.record': () => {
 
-		  var newChildRef = ref.push();
-		  newChildRef.set(parameters);
+        //add ingredient to database
+		    var newChildRef = ref.push();
+		    newChildRef.set(parameters);
 	  
-          if (requestSource === googleAssistantRequest) {
-              sendGoogleResponse('Ingredient added!'); // Send simple response to user
-          } else {
-              sendResponse('Ingredient added!'); // Send simple response to user
-          }
+        if (requestSource === googleAssistantRequest) {
+            sendGoogleResponse('Ingredient added!');
+        } else {
+            sendResponse('Ingredient added!');
+        }
+      },
+
+      'input.read.recipe': () => {
+
+        //todo read from database
+
+        if (requestSource === googleAssistantRequest) {
+            sendGoogleResponse('Your recipe contains the next ingredients');
+        } else {
+            sendResponse('Your recipe contains the next ingredients');
+        }
       },
 
       'input.unknown': () => {
