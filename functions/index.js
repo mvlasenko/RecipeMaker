@@ -33,42 +33,66 @@ function processV1Request (request, response) {
   // Create handlers for Dialogflow actions as well as a 'default' handler
   const actionHandlers = {
 
-      'input.add.recipe': () => {
+      'input.add_recipe': () => {
 
         //todo write to database
 
+        var contextObj = JSON.parse('[{"name":"edit_recipe", "lifespan":5, "parameters":{}}]');
+
+        let responseToUser = {
+          speech: 'You created a new recipe. Plese say first inredient',
+          text: 'You created a new recipe. Plese say first inredient',
+          contexts : contextObj
+        };
+
         if (requestSource === googleAssistantRequest) {
-            sendGoogleResponse('You created a new recipe. Plese say first inredient');
+            sendGoogleResponse(responseToUser);
         } else {
-            sendResponse('You created a new recipe. Plese say first inredient');
+            sendResponse(responseToUser);
         }
       },
 
-      'input.open.recipe': () => {
+      'input.open_recipe': () => {
 
         //todo write to database
 
+        var contextObj = JSON.parse('[{"name":"edit_recipe", "lifespan":5, "parameters":{}}]');
+
+        let responseToUser = {
+          speech: 'You opened a new recipe. Plese continue cooking',
+          text: 'You opened a new recipe. Plese continue cooking',
+          contexts : contextObj
+        };
+
         if (requestSource === googleAssistantRequest) {
-            sendGoogleResponse('You opened a new recipe. Plese continue cooking');
+            sendGoogleResponse(responseToUser);
         } else {
-            sendResponse('You opened a new recipe. Plese continue cooking');
+            sendResponse(responseToUser);
         }
       },
 
-      'input.add.record': () => {
+      'edit_recipe.add_record': () => {
 
         //add ingredient to database
 		    var newChildRef = ref.push();
-		    newChildRef.set(parameters);
+        newChildRef.set(parameters);
+
+        var contextObj = JSON.parse('[{"name":"edit_recipe", "lifespan":5, "parameters":{}}]');
+        
+        let responseToUser = {
+          speech: 'Ingredient added!',
+          text: 'Ingredient added!',
+          contexts : contextObj
+        };
 	  
         if (requestSource === googleAssistantRequest) {
-            sendGoogleResponse('Ingredient added!');
+            sendGoogleResponse(responseToUser);
         } else {
-            sendResponse('Ingredient added!');
+            sendResponse(responseToUser);
         }
       },
 
-      'input.read.recipe': () => {
+      'input.read_recipe': () => {
 
         //todo read from database
 
@@ -88,17 +112,15 @@ function processV1Request (request, response) {
     },
     // Default handler for unknown or undefined actions
     'default': () => {
+      
+      let responseToUser = {
+        speech: 'Sorry, I can\'t help!', // spoken response
+        text: 'Sorry, I can\'t help!' // displayed response
+      };
+    
       if (requestSource === googleAssistantRequest) {
-        let responseToUser = {
-          speech: 'Sorry, I can\'t help!', // spoken response
-          text: 'Sorry, I can\'t help!' // displayed response
-        };
         sendGoogleResponse(responseToUser);
       } else {
-        let responseToUser = {
-            speech: 'Sorry, I can\'t help!', // spoken response
-            text: 'Sorry, I can\'t help!' // displayed response
-        };
         sendResponse(responseToUser);
       }
     }
@@ -124,8 +146,8 @@ function processV1Request (request, response) {
         googleResponse = responseToUser.googleRichResponse;
       }
       // Optional: add contexts (https://dialogflow.com/docs/contexts)
-      if (responseToUser.googleOutputContexts) {
-        app.setContext(...responseToUser.googleOutputContexts);
+      if (responseToUser.contexts) {
+        app.setContext(responseToUser.contexts);
       }
       console.log('Response to Dialogflow (AoG): ' + JSON.stringify(googleResponse));
       app.ask(googleResponse); // Send response to Dialogflow and Google Assistant
@@ -148,7 +170,7 @@ function processV1Request (request, response) {
       // Optional: add rich messages for integrations (https://dialogflow.com/docs/rich-messages)
       responseJson.data = responseToUser.data;
       // Optional: add contexts (https://dialogflow.com/docs/contexts)
-      responseJson.contextOut = responseToUser.outputContexts;
+      responseJson.contextOut = responseToUser.contexts;
       console.log('Response to Dialogflow: ' + JSON.stringify(responseJson));
       response.json(responseJson); // Send response to Dialogflow
     }
