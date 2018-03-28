@@ -40,8 +40,8 @@ function processV1Request (request, response) {
         var contextObj = JSON.parse('[{"name":"edit_recipe", "lifespan":5, "parameters":{}}]');
 
         let responseToUser = {
-          speech: 'You created a new recipe. Plese say first inredient',
-          text: 'You created a new recipe. Plese say first inredient',
+          speech: 'You created a new recipe. Please say first inredient',
+          text: 'You created a new recipe. Please say first inredient',
           contexts : contextObj
         };
 
@@ -59,8 +59,8 @@ function processV1Request (request, response) {
         var contextObj = JSON.parse('[{"name":"edit_recipe", "lifespan":5, "parameters":{}}]');
 
         let responseToUser = {
-          speech: 'You opened a new recipe. Plese continue cooking',
-          text: 'You opened a new recipe. Plese continue cooking',
+          speech: 'You opened a new recipe. Please continue cooking',
+          text: 'You opened a new recipe. Please continue cooking',
           contexts : contextObj
         };
 
